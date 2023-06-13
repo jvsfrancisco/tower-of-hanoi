@@ -18,5 +18,16 @@ export const GameFunctions = {
             return true;
         }
         return false;
-    }
+    },
+    moveDisk: function(disk, fromTower, toTower) {
+        if (this.canMoveDisk(disk, toTower)) {
+            toTower.push(disk);
+            fromTower.pop();
+        } else {
+            console.log("Invalid move!");
+        }
+        return;
+    },
+    
+
 }

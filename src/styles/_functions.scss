@@ -1,0 +1,16 @@
+//purpose: create a function who returns a random color and the color is different for each disk
+
+
+@function randomColor() {
+    $vermelho: random(256);
+    $verde: random(256);
+    $azul: random(256);
+    
+    @return rgb($vermelho, $verde, $azul);
+  }
+
+$browser-context: 16;
+
+@function rem($pixels: 16, $context: $browser-context) {
+  @return #{calc($pixels/$context)}rem;
+}
