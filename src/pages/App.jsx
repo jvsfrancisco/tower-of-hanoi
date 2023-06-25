@@ -1,21 +1,14 @@
+import Game from "./../components/game";
 import "./../styles/index.scss";
-import Disc from "../components/Disc";
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 function App() {
   return (
     <>
-      <header>
-        <h1>Towers of Hanoi</h1>
-      </header>
-      <main>
-        <div className="game">
-          <div className="tower">
-          <Disc index={1} />
-          <Disc index={2} />
-          <Disc index={3}/>
-          </div>
-        </div>
-      </main>
+      <DndProvider backend={HTML5Backend}>
+        <Game />
+      </DndProvider>
     </>
   );
 }

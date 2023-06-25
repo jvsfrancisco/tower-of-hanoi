@@ -9,7 +9,7 @@
     @return rgb($vermelho, $verde, $azul);
   }
 
-$browser-context: 16;
+$browser-context: 22;
 
 @function rem($pixels: 16, $context: $browser-context) {
   @return #{calc($pixels/$context)}rem;

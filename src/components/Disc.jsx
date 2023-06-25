@@ -1,18 +1,23 @@
-// import { useDrag } from 'react-dnd';
-// import { ItemTypes, DiskHeights } from '../utils/items';
+import { useDrag } from 'react-dnd';
+import { ItemTypes } from '../utils/items';
 
-const Disc = ({ index }) => {
-    // eslint-disable-next-line no-unused-vars
-    // const [{ isDragging }, drag] = useDrag({
-    //     item: { type: ItemTypes.DISK, size },
-    //     collect: (monitor) => ({
-    //     isDragging: !!monitor.isDragging(),
-    //     }),
-    // });
-    
+
+const Disc = ({ index, size, isGameOver}) => {
+    const [{ isDragging }, drag] = useDrag({
+        type: ItemTypes.DISK,
+        item: { index, size },
+        collect: (monitor) => ({
+            isDragging: isGameOver? false : monitor.isDragging(),
+        }),
+    });
+
+      const styles = {
+        opacity: isDragging ? 0.5 : 1,
+        cursor: 'move',
+        };
+
     return (
-        //TODO BONUS: Make the disc draggable 
-        <div className={`disc disc-${index}`}/>
+        <div className={`disc disc-${size}`} style={{...styles}} ref={drag}/>
     );
     }
 

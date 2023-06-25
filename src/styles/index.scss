@@ -6,13 +6,13 @@
 * {
   box-sizing: border-box;
 }
+
 body {
   font-family: $font-inter;
   background: $body-bg;
   color: $orange-selected;
-
 }
-// purpose: styles for the disks of the tower of hanoi
+
 header {
   display: flex;
   align-items: center;
@@ -23,32 +23,57 @@ header {
   width: 100%;
   height: rem(100);
   background-color: $header-bg;
-  h1{
+  h1 {
     font-size: rem(40);
     font-weight: 800;
     color: $white;
   }
 }
-main{
+
+main {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   height: 100vh;
-  width: 100%; 
-  .game{
+  width: 100%;
+  .game {
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
-    width: 100vw
-    ;
+    width: 100vw;
     height: rem(500);
-  // purpose: styles for the disks of the tower of hanoi  
+    // purpose: styles for the disks of the tower of hanoi
+    .tower {
+      position: relative;
+      display: flex;
+      justify-content: flex-end;
+      flex-direction: column;
+      width: calc(100% / 3);
+      height: rem(500);
+      background: $white;
+      border-radius: rem(8);
+      // coloque a haste da torre atras dos discos
+      .tower-stem {
+        z-index: 0;
+        position: absolute;
+        bottom: 0;
+        left: calc(50% - $stem-width / 2);
+        width: $stem-width;
+        height: rem(500);
+        background: $gray-line;
+        border-radius: rem(8);
+        margin: 0 auto;
+      }
+    }
     .disc {
+      z-index: 2;
       height: rem(50);
       //purpose: a random color for each disk
       border-radius: rem(8);
       margin: rem(5) auto;
       transition: all 0.2s ease-in-out;
+      background: randomColor();
 
       &:hover {
         transform: scale(1.1);
@@ -58,39 +83,51 @@ main{
       }
       &.disc-1 {
         background: randomColor() !important;
-        width: rem(100);
+        width: rem(50);
       }
       &.disc-2 {
         background: randomColor();
-        width: rem(150);
+        width: rem(100);
       }
       &.disc-3 {
         background: randomColor();
-        width: rem(200);
+        width: rem(150);
       }
       &.disc-4 {
         background: randomColor();
-        width: rem(250);
+        width: rem(200);
       }
       &.disc-5 {
         background: randomColor();
-        width: rem(300);
+        width: rem(250);
       }
       &.disc-6 {
         background: randomColor();
-        width: rem(350);
+        width: rem(300);
       }
       &.disc-7 {
         background: randomColor();
-        width: rem(400);
+        width: rem(350);
       }
       &.disc-8 {
         background: randomColor();
-        width: rem(450);
+        width: rem(400);
       }
-
-  //TODO: add a transition to the disks
-  //TODO: Randomize the color of the disks one by one
     }
+  }
+  .data-moves {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    height: 30vh;
+    width: 80%;
+    height: rem(100);
+    margin-top: rem(50);
+    p{
+      font-size: rem(20);
+      font-weight: 800;
+      color: $header-bg;
+    }
+    
   }
 }

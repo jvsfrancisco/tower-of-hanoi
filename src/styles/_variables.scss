@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
+@import "functions";
 
 $font-inter: "Inter", sans-serif;
 $body-bg: #F3F5F9;
@@ -11,6 +12,6 @@ $orange-unselected: rgba(211, 40, 17, 0.5);
 $orange-unselected-hover: #d32811b3;
 $orange-selected-hover: #ec2c13;
 $line: rgba(255, 255, 255, 0.1);
-
+$stem-width: rem(10);
 
 
