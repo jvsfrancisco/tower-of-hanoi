@@ -71,13 +71,15 @@ function Game() {
   const handleModalClose = () => {
     setIsModalOpen(false);
     handleReset();
+    return;
   };
 
   const handleReset = () => {
     setDiscs(2);
     setTowers(generateTowers(2));
     setMoves(0);
-    setExpectedMoves(expectedMoveHandle(newNumberOfDiscs));
+    setExpectedMoves(expectedMoveHandle(2));
+    return;
   };
 
   const handleNumberOfDiscs = (event) => {
