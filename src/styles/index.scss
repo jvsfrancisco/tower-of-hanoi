@@ -5,6 +5,7 @@
 
 * {
   box-sizing: border-box;
+  transition: all 0.2s;
 }
 
 body {
@@ -94,7 +95,6 @@ main {
       height: rem(50);
       border-radius: rem(8);
       margin: rem(5) auto;
-      transition: all 0.2s;
       background: randomColor();
 
       &:hover {

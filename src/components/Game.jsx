@@ -124,7 +124,7 @@ function Game() {
         {gameOver && (
           <Modal isOpen={isModalOpen} onClose={handleModalClose}>
             <div className="modal-content">
-              <h2>Game Over!</h2>
+              <h2>Game Completed!</h2>
               <p>You made {moves} moves.</p>
               <p>The expected number of moves was {expectedMoves}.</p>
               {moves === expectedMoves ? (
