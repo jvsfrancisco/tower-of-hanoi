@@ -1,5 +1,10 @@
 import Tower from "./Tower";
 import { useState, useEffect } from "react";
+import Modal from "./Modal";
+import sad from "./../../public/sad.png";
+import party from "./../../public/party.png";
+import not from "./../../public/not.svg";
+import zap from "./../../public/zap.svg";
 
 const generateTowers = (discs) => {
   const initialTower = Array.from(
@@ -19,6 +24,7 @@ function Game() {
   const [moves, setMoves] = useState(0);
   const [expectedMoves, setExpectedMoves] = useState(expectedMoveHandle(discs));
   const [gameOver, setIsGameOver] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     isGameOver();
@@ -36,28 +42,35 @@ function Game() {
     setTowers(newTowers);
     setMoves(moves + 1);
   };
-  
 
   const handleDrop = (size, towerIndex) => {
-  if (isGameOver()) {
-    return; // Retorna se o jogo já foi concluído
-  }
+    if (isGameOver()) {
+      return; // Retorna se o jogo já foi concluído
+    }
 
-  const fromTowerIndex = towers.findIndex((tower) => tower.includes(size));
-  const fromTower = towers[fromTowerIndex];
-  const toTower = towers[towerIndex];
+    const fromTowerIndex = towers.findIndex((tower) => tower.includes(size));
+    const fromTower = towers[fromTowerIndex];
+    const toTower = towers[towerIndex];
 
-  // Verifica se é possível mover a peça para a torre de destino
-  if (
-    (toTower.length === 0 || size < toTower[toTower.length - 1]) &&
-    (fromTowerIndex !== towerIndex || fromTower.indexOf(size) === fromTower.length - 1)
-  ) {
-    moveDisc(fromTowerIndex, towerIndex);
-  }
-};
+    // Verifica se é possível mover a peça para a torre de destino
+    if (
+      (toTower.length === 0 || size < toTower[toTower.length - 1]) &&
+      (fromTowerIndex !== towerIndex ||
+        fromTower.indexOf(size) === fromTower.length - 1)
+    ) {
+      moveDisc(fromTowerIndex, towerIndex);
+    }
+  };
 
   const isGameOver = () => {
-    return setIsGameOver(towers[2].length === discs);
+    setIsModalOpen(true);
+    setIsGameOver(towers[2].length === discs);
+    return;
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+    handleReset();
   };
 
   const handleReset = () => {
@@ -108,13 +121,33 @@ function Game() {
           <p className="moves">Moves: {moves}</p>
           <p className="expected-moves"> Expected-moves: {expectedMoves}</p>
         </div>
-        {gameOver ? (
-          moves === expectedMoves ? (
-            <p className="win">You Win!</p>
-          ) : (
-            <p className="lose">You Lose!</p>
-          )
-        ) : null}
+        {gameOver && (
+          <Modal isOpen={isModalOpen} onClose={handleModalClose}>
+            <div className="modal-content">
+              <h2>Game Over!</h2>
+              <p>You made {moves} moves.</p>
+              <p>The expected number of moves was {expectedMoves}.</p>
+              {moves === expectedMoves ? (
+                <>
+                  <p className="win">Congratulations, you did it!</p>
+                  <div className="images">
+                    <img src={party} alt="party" />
+                    <img src={zap} alt="zap" />
+                  </div>
+                </>
+              ) : (
+                <>
+                  <p className="lose">Unfortunately, you didn't succeed...</p>
+                  <div className="images">
+                    <img src={sad} alt="sad" />
+                    <img src={not} alt="not" />
+                  </div>
+                </>
+              )}
+              <button onClick={handleModalClose}>Close</button>
+            </div>
+          </Modal>
+        )}
       </main>
     </>
   );

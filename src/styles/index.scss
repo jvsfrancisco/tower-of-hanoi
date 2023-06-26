@@ -8,8 +8,8 @@
 }
 
 body {
-  font-family: $font-inter;
   background: $body-bg;
+  font-family: "Inter", sans-serif;
 }
 
 header {
@@ -148,31 +148,6 @@ main {
     margin-top: rem(50);
     padding-left: rem(90);
     padding-right: rem(75);
-    button {
-      width: rem(120);
-      height: rem(60);
-      border-radius: rem(15);
-      font-size: rem(20);
-      font-weight: 800;
-      font-family: "Inter", sans-serif;
-      color: $white;
-      background: $header-bg;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      transition: 0.2s;
-      &:hover {
-        background: $header-bg-selected;
-        width: rem(130);
-        height: rem(65);
-      }
-      &:active {
-        background: $header-bg-unselected;
-        width: rem(120);
-        height: rem(60);
-      }
-    }
     p {
       font-size: rem(20);
       font-weight: 800;
@@ -206,5 +181,53 @@ main {
         background-color: #f1f1f1;
       }
     }
+  }
+}
+.modal {
+  color: $header-bg;
+  background-color: $white;
+  width: rem(800);
+  height: rem(400);
+  display: flex;
+  .modal-content{
+    font-weight: 800;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    .lose{
+      color:red;
+    }
+    .win{
+      color:green;
+    }
+  }
+
+}
+
+button {
+  width: rem(120);
+  height: rem(60);
+  border-radius: rem(15);
+  font-size: rem(20);
+  font-weight: 800;
+  color: $white;
+  background: $header-bg !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.2s;
+  &:hover {
+    background: $header-bg-selected;
+    width: rem(130);
+    height: rem(65);
+  }
+  &:active {
+    background: $header-bg-unselected;
+    width: rem(120);
+    height: rem(60);
   }
 }
