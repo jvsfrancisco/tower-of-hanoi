@@ -75,8 +75,9 @@ function Game() {
 
   const handleReset = () => {
     setDiscs(2);
-    setTowers(generateTowers(discs));
+    setTowers(generateTowers(2));
     setMoves(0);
+    setExpectedMoves(expectedMoveHandle(newNumberOfDiscs));
   };
 
   const handleNumberOfDiscs = (event) => {
