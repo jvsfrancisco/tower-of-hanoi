@@ -1,10 +1,28 @@
 import Tower from "./Tower";
+import { useState, useEffect } from "react";
 
-import { useState } from "react";
+const generateTowers = (discs) => {
+  const initialTower = Array.from(
+    { length: discs },
+    (_, index) => discs - index
+  );
+  return [initialTower, [], []];
+};
+
+const expectedMoveHandle = (discs) => {
+  return Math.pow(2, discs) - 1;
+};
 
 function Game() {
-  const [towers, setTowers] = useState([[3,2,1], [], []]);
+  const [discs, setDiscs] = useState(2);
+  const [towers, setTowers] = useState(generateTowers(discs));
   const [moves, setMoves] = useState(0);
+  const [expectedMoves, setExpectedMoves] = useState(expectedMoveHandle(discs));
+  const [gameOver, setIsGameOver] = useState(false);
+
+  useEffect(() => {
+    isGameOver();
+  }, [towers]);
 
   const moveDisc = (from, to) => {
     const newTowers = [...towers];
@@ -18,21 +36,42 @@ function Game() {
     setTowers(newTowers);
     setMoves(moves + 1);
   };
+  
 
   const handleDrop = (size, towerIndex) => {
-    if (isGameOver()) {
-      return; // Retorna se o jogo já foi concluído
-    }
+  if (isGameOver()) {
+    return; // Retorna se o jogo já foi concluído
+  }
+
   const fromTowerIndex = towers.findIndex((tower) => tower.includes(size));
+  const fromTower = towers[fromTowerIndex];
   const toTower = towers[towerIndex];
 
-  if (toTower.length === 0 || size < toTower[toTower.length - 1]) {
+  // Verifica se é possível mover a peça para a torre de destino
+  if (
+    (toTower.length === 0 || size < toTower[toTower.length - 1]) &&
+    (fromTowerIndex !== towerIndex || fromTower.indexOf(size) === fromTower.length - 1)
+  ) {
     moveDisc(fromTowerIndex, towerIndex);
   }
 };
 
   const isGameOver = () => {
-    return towers[2].length === 3;
+    return setIsGameOver(towers[2].length === discs);
+  };
+
+  const handleReset = () => {
+    setDiscs(2);
+    setTowers(generateTowers(discs));
+    setMoves(0);
+  };
+
+  const handleNumberOfDiscs = (event) => {
+    const newNumberOfDiscs = parseInt(event.target.value);
+    setDiscs(newNumberOfDiscs);
+    setTowers(generateTowers(newNumberOfDiscs));
+    setMoves(0);
+    setExpectedMoves(expectedMoveHandle(newNumberOfDiscs));
   };
 
   return (
@@ -44,32 +83,38 @@ function Game() {
         <div className="game">
           {towers.map((disk, index) => (
             <Tower
+              towerIndex={index}
               key={index}
               discs={disk}
               ondrop={(size) => handleDrop(size, index)}
-              isGameOver={isGameOver}
+              isGameOver={gameOver}
             />
           ))}
         </div>
         <div className="data-moves">
-          <button value="Reset" onClick={() => window.location.reload()}> Reset </button>
-          <label>
-            <p>Discs</p>
-            <select >
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">3</option>
-              <option value="6">4</option>
-              <option value="7">4</option>
-              <option value="8">4</option>
+          <button value="Reset" onClick={() => handleReset()}>
+            Reset
+          </button>
+          <div className="select-discs">
+            <label htmlFor="numDiscs">Number of Discs:</label>
+            <select id="numDiscs" value={discs} onChange={handleNumberOfDiscs}>
+              {[2, 3, 4, 5, 6, 7, 8].map((value) => (
+                <option key={value} value={value}>
+                  {value}
+                </option>
+              ))}
             </select>
-          </label>
-          
-
+          </div>
           <p className="moves">Moves: {moves}</p>
-          <p className="expected-moves"> Expected-moves: 7</p>
+          <p className="expected-moves"> Expected-moves: {expectedMoves}</p>
         </div>
-        {isGameOver() && <p>Congratulaations!</p>}
+        {gameOver ? (
+          moves === expectedMoves ? (
+            <p className="win">You Win!</p>
+          ) : (
+            <p className="lose">You Lose!</p>
+          )
+        ) : null}
       </main>
     </>
   );

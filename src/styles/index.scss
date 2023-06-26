@@ -10,7 +10,6 @@
 body {
   font-family: $font-inter;
   background: $body-bg;
-  color: $orange-selected;
 }
 
 header {
@@ -51,9 +50,20 @@ main {
       flex-direction: column;
       width: calc(100% / 3);
       height: rem(500);
-      background: $white;
       border-radius: rem(8);
-      // coloque a haste da torre atras dos discos
+      &::after {
+        content: "";
+        position: absolute;
+        left: 25%;
+        width: 50%;
+        height: rem(8);
+        background: $gray-line;
+        border-radius: rem(8);
+        //sombra apenas embaixo
+    
+      }
+
+
       .tower-stem {
         z-index: 0;
         position: absolute;
@@ -64,15 +74,27 @@ main {
         background: $gray-line;
         border-radius: rem(8);
         margin: 0 auto;
+
+        &.animate {
+          animation: tower-animation 0.5s infinite alternate;
+        }
+
+        @keyframes tower-animation {
+          from {
+            background-color: white;
+          }
+          to {
+            background-color: lightgreen;
+          }
+        }
       }
     }
     .disc {
       z-index: 2;
       height: rem(50);
-      //purpose: a random color for each disk
       border-radius: rem(8);
       margin: rem(5) auto;
-      transition: all 0.2s ease-in-out;
+      transition: all 0.2s;
       background: randomColor();
 
       &:hover {
@@ -117,17 +139,72 @@ main {
   }
   .data-moves {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: flex-start;
     height: 30vh;
-    width: 80%;
+    width: 100%;
     height: rem(100);
     margin-top: rem(50);
-    p{
+    padding-left: rem(90);
+    padding-right: rem(75);
+    button {
+      width: rem(120);
+      height: rem(60);
+      border-radius: rem(15);
+      font-size: rem(20);
+      font-weight: 800;
+      font-family: "Inter", sans-serif;
+      color: $white;
+      background: $header-bg;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: 0.2s;
+      &:hover {
+        background: $header-bg-selected;
+        width: rem(130);
+        height: rem(65);
+      }
+      &:active {
+        background: $header-bg-unselected;
+        width: rem(120);
+        height: rem(60);
+      }
+    }
+    p {
       font-size: rem(20);
       font-weight: 800;
       color: $header-bg;
     }
-    
+    .select-discs {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: rem(400);
+      label {
+        width: rem(200);
+        height: rem(30);
+        border-radius: rem(30);
+        font-size: rem(20);
+        font-weight: 800;
+        font-family: "Inter", sans-serif;
+        color: $header-bg;
+        padding: rem(5);
+      }
+      select {
+        width: rem(200);
+        height: rem(50);
+        border-radius: rem(30);
+        font-size: rem(20);
+        font-weight: 800;
+        font-family: "Inter", sans-serif;
+        color: $header-bg;
+        padding: rem(5);
+        cursor: pointer;
+        background-color: #f1f1f1;
+      }
+    }
   }
 }
